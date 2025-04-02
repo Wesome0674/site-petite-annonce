@@ -78,7 +78,7 @@ function getMessagesFromUser() {
 ```
 
 
-### 5. Obtenir la liste des message d'un user
+### 5. Creer une annonce
 ```javascript
 function createAnnonce(titre, description, prix, idUser, idCategorie) {
     const annonceData = {
