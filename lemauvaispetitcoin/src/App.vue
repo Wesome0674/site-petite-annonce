@@ -1,9 +1,11 @@
 <script setup>
-import HelloWorld from './components/HelloWorld.vue'
+import Card from './components/card.vue'
 </script>
 
 <template>
-<p>coucou</p>
+  <p>coucou</p>
+  <Card/>
+
 </template>
 
 <style scoped>
@@ -13,9 +15,11 @@ import HelloWorld from './components/HelloWorld.vue'
   will-change: filter;
   transition: filter 300ms;
 }
+
 .logo:hover {
   filter: drop-shadow(0 0 2em #646cffaa);
 }
+
 .logo.vue:hover {
   filter: drop-shadow(0 0 2em #42b883aa);
 }
