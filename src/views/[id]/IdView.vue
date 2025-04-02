@@ -4,6 +4,14 @@ import { useRoute } from 'vue-router'
 
 interface Annonce {
   idAnnonce: string
+  idCategorie: string
+  idUser: string
+  user_email: string
+  user_nom: string
+  titre: string
+  description: string
+  prix: number
+  categorie_nom: string
 }
 
 const route = useRoute()
@@ -40,6 +48,9 @@ onMounted(() => {
     <div v-else-if="annonce">
       <!-- Display your annonce data here -->
       <p>Annonce ID: {{ annonce.idAnnonce }}</p>
+      <p>Annonce Titre: {{ annonce.titre }}</p>
+      <p>Annonce Description: {{ annonce.description }}</p>
+      <p>Annonce Prix: {{ annonce.prix }}</p>
     </div>
     <div v-else>Loading...</div>
   </div>
