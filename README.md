@@ -115,6 +115,39 @@ function createAnnonce(titre, description, prix, idUser, idCategorie) {
 createAnnonce("Vélo de course", "Vélo en très bon état", "299.99", 1, 1);
 ```
 
+### 6. Creer un user
+```javascript
+function createUser(nom, email, password) {
+    const annonceData = {
+        type: 'users',
+        nom: nom,
+        email: email,
+        password: password
+    };
+
+    fetch('http://172.20.10.2:8888/site-petite-annonce/api/v1/', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(annonceData)
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+        return response.json();
+    })
+    .then(data => {
+        console.log('User created:', data);
+    })
+    .catch(error => {
+        console.error('Error creating user:', error);
+    });
+}
+
+createUser("kicks", "kiki@tett.com", "jjj")
+```
 
 
 
