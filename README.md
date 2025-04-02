@@ -159,7 +159,7 @@ function sendMessage(idAnnonce, idEnvoyeur, idDestinataire, contenu) {
         contenu: contenu
     };
 
-    fetch('http://172.20.10.2:8888/site-petite-annonce/api/v1/', {
+    fetch('https://dnmade1.gobelinsannecy.fr/PetitesAnnonces/api/v1/', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
@@ -182,5 +182,29 @@ function sendMessage(idAnnonce, idEnvoyeur, idDestinataire, contenu) {
 
 sendMessage(1,1,2, "encore dispo pelo ??")
 ```
+### 7. Supprimer un message
+```javascript
+function deleteMessage(messageId) {
+    fetch(`https://dnmade1.gobelinsannecy.fr/PetitesAnnonces/api/v1/?message=${messageId}`, {
+        method: 'DELETE',
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+        return response.json();
+    })
+    .then(data => {
+        console.log('Message deleted:', data);
+    })
+    .catch(error => {
+        console.error('Error deleting message:', error);
+    });
+}
+```
+
 
 
