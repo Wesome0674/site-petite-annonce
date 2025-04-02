@@ -125,7 +125,7 @@ function createUser(nom, email, password) {
         password: password
     };
 
-    fetch('http://172.20.10.2:8888/site-petite-annonce/api/v1/', {
+    fetch('https://dnmade1.gobelinsannecy.fr/PetitesAnnonces/api/v1/', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
