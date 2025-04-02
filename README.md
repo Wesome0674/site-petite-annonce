@@ -5,7 +5,7 @@
 ### 1. Obtenir la liste des annonces 
 ```javascript
 function getAllAnonnces() {
-    fetch('http://172.20.10.3:8888/site-petite-annonce/api/v1/?annonces')
+    fetch('http://188.165.61.82/DN_MADE_1_24_25/site-petite-annonce/api/v1/?annonces')
         .then(response => {
             if (!response.ok) {
                 throw new Error('Network response was not ok');
@@ -23,7 +23,7 @@ function getAllAnonnces() {
 ### 2. Obtenir la liste des categories 
 ```javascript
 function getAllCategories() {
-    fetch('http://172.20.10.3:8888/site-petite-annonce/api/v1/categories?')
+    fetch('http://188.165.61.82/DN_MADE_1_24_25/site-petite-annonce/api/v1/categories?')
         .then(response => {
             if (!response.ok) {
                 throw new Error('Network response was not ok');
@@ -42,7 +42,7 @@ function getAllCategories() {
 ### 3. Obtenir la liste des users 
 ```javascript
 function getAllUsers() {
-    fetch('http://172.20.10.3:8888/site-petite-annonce/api/v1/?users')
+    fetch('http://188.165.61.82/DN_MADE_1_24_25/site-petite-annonce/api/v1/?users')
         .then(response => {
             if (!response.ok) {
                 throw new Error('Network response was not ok');
@@ -61,7 +61,7 @@ function getAllUsers() {
 ### 4. Obtenir la liste des message d'un user
 ```javascript
 function getMessagesFromUser() {
-    fetch('http://172.20.10.3:8888/site-petite-annonce/api/v1/?messages&user={idUser}')
+    fetch('http://188.165.61.82/DN_MADE_1_24_25/site-petite-annonce/api/v1/?messages&user={idUser}')
         .then(response => {
             if (!response.ok) {
                 throw new Error('Network response was not ok');
