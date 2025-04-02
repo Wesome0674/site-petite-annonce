@@ -54,6 +54,8 @@ async function verifyPassword(e: Event) {
         user.email.toLowerCase() === normalizedEmail.value && user.password === hashedPassword,
     )
 
+    localStorage.setItem('userConnected', JSON.stringify(user))
+
     if (user) {
       // Create authentication cookie if user is found
       setAuthCookie({
