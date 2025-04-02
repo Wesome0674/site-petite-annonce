@@ -148,6 +148,39 @@ function createUser(nom, email, password) {
 
 createUser("kicks", "kiki@tett.com", "jjj")
 ```
+### 7. Envoyer un message
+```javascript
+function sendMessage(idAnnonce, idEnvoyeur, idDestinataire, contenu) {
+    const messageData = {
+        type: 'messages',
+        idAnnonce: idAnnonce.toString(),
+        idEnvoyeur: idEnvoyeur.toString(),
+        idDestinataire: idDestinataire.toString(),
+        contenu: contenu
+    };
 
+    fetch('http://172.20.10.2:8888/site-petite-annonce/api/v1/', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(messageData)
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+        return response.json();
+    })
+    .then(data => {
+        console.log('message sent:', data);
+    })
+    .catch(error => {
+        console.error('Error sending message:', error);
+    });
+}
+
+sendMessage(1,1,2, "encore dispo pelo ??")
+```
 
 
