@@ -81,14 +81,11 @@ export default {
     },
     sendMessage() {
   if (this.newMessage.trim() && this.activeConversation) {
-    // Vérifie si messages existe, sinon initialiser un tableau vide
     if (!this.activeConversation.messages) {
       this.activeConversation.messages = [];
     }
-    
-    // Ajouter le message
-    this.activeConversation.messages.push({ sender: "me", contenu: this.newMessage });
-    this.newMessage = "";  // Réinitialiser le champ de texte
+        this.activeConversation.messages.push({ sender: "me", contenu: this.newMessage });
+    this.newMessage = "";  
   }
 }
 
