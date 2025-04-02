@@ -76,3 +76,45 @@ function getMessagesFromUser() {
         });
 }
 ```
+
+
+### 5. Obtenir la liste des message d'un user
+```javascript
+function createAnnonce(titre, description, prix, idUser, idCategorie) {
+    const annonceData = {
+        type: 'annonces',
+        titre: titre,
+        description: description,
+        prix: prix.toString(),
+        idUser: idUser.toString(),
+        idCategorie: idCategorie
+    };
+
+    fetch('https://dnmade1.gobelinsannecy.fr/PetitesAnnonces/api/v1/', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(annonceData)
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+        return response.json();
+    })
+    .then(data => {
+        console.log('Annonce created:', data);
+    })
+    .catch(error => {
+        console.error('Error creating annonce:', error);
+    });
+}
+
+// Example usage:
+createAnnonce("Vélo de course", "Vélo en très bon état", "299.99", 1, 1);
+```
+
+
+
+
