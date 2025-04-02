@@ -1,6 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router';
 
-// Importez vos composants ici
+// Importez les composants ici
 
 
 const routes = [
