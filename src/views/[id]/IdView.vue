@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { ref, onMounted } from 'vue'
 import { useRoute } from 'vue-router'
+import Body from '../../components/_id/Body.vue'
 
 interface Annonce {
   idAnnonce: string
@@ -46,11 +47,7 @@ onMounted(() => {
   <div>
     <div v-if="error" class="error">{{ error }}</div>
     <div v-else-if="annonce">
-      <!-- Display your annonce data here -->
-      <p>Annonce ID: {{ annonce.idAnnonce }}</p>
-      <p>Annonce Titre: {{ annonce.titre }}</p>
-      <p>Annonce Description: {{ annonce.description }}</p>
-      <p>Annonce Prix: {{ annonce.prix }}</p>
+      <Body :title="annonce.titre" :description="annonce.description" :prix="annonce.prix" />
     </div>
     <div v-else>Loading...</div>
   </div>
