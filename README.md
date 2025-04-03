@@ -206,5 +206,28 @@ function deleteMessage(messageId) {
 }
 ```
 
+### 8. Supprimer une annonce
+```javascript
 
+function deleteAnnonce(annonceId) {
+    fetch(`https://dnmade1.gobelinsannecy.fr/PetitesAnnonces/api/v1/?annonce=${annonceId}`, {
+        method: 'DELETE',
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+        return response.json();
+    })
+    .then(data => {
+        console.log('Annonce deleted:', data);
+    })
+    .catch(error => {
+        console.error('Error deleting Annonce:', error);
+    });
+}
+```
 
