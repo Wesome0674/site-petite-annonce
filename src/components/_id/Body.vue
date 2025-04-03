@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import IconPrice from '../icons/IconPrice.vue'
+import DeleteButton from '../_id/delete-button/DeleteButton.vue'
 
 defineProps<{
   annonceId: string
@@ -25,6 +26,7 @@ defineProps<{
         <IconPrice />
         Envoyer un message
       </RouterLink>
+      <DeleteButton :annonce-id="annonceId" />
     </div>
   </div>
 </template>
@@ -60,9 +62,11 @@ defineProps<{
 
 .right-part {
   display: flex;
+  flex-direction: column;
+  gap: 10px;
   width: max-content;
   height: 100%;
-  align-items: center;
+  align-items: end;
   justify-content: center;
 }
 
