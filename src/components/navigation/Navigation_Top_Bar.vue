@@ -5,7 +5,9 @@ import IconMan from '../icons/IconMan.vue'
 
 <template>
   <section>
-    <h1>LePetitMauvaisCoin</h1>
+    <RouterLink to="/" class="logo">
+      <h1>LePetitMauvaisCoin</h1>
+    </RouterLink>
     <div class="link_container">
       <a href="/my-messages">
         <IconMessage />
@@ -20,6 +22,10 @@ import IconMan from '../icons/IconMan.vue'
 </template>
 
 <style scoped>
+.logo {
+  text-decoration: none;
+}
+
 section {
   width: 100%;
   padding: 10px 20px;

@@ -70,6 +70,7 @@ async function createUser(e: Event) {
     </div>
 
     <button type="submit" class="submit-btn">Sign Up</button>
+    <p>Ou connectez-vous <a href="/logIn">Log in</a></p>
   </form>
 </template>
 

@@ -112,6 +112,7 @@ async function verifyPassword(e: Event) {
     <button type="submit" class="submit-btn" :disabled="isLoading">
       {{ isLoading ? 'Logging in...' : 'Login' }}
     </button>
+    <p>Ou créez votre compte <a href="/signUp">Sign up</a></p>
   </form>
 </template>
 
