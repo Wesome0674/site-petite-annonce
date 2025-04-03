@@ -30,6 +30,12 @@
               :class="msg.sender === 'me' ? 'bg-blue-500 text-white' : 'bg-gray-300'">
               {{ msg.contenu }}
             </span>
+            <button 
+              v-if="msg.sender === 'me'" 
+              @click="deleteMessage(msg.id)" 
+              class="ml-2 text-red-500 hover:text-red-700">
+              Supprimer
+            </button>
           </div>
         </div>
         
@@ -80,19 +86,75 @@ export default {
       this.activeConversation = conv;
     },
     sendMessage() {
-  if (this.newMessage.trim() && this.activeConversation) {
-    if (!this.activeConversation.messages) {
-      this.activeConversation.messages = [];
-    }
-        this.activeConversation.messages.push({ sender: "me", contenu: this.newMessage });
-    this.newMessage = "";  
-  }
-}
+      if (this.newMessage.trim() && this.activeConversation) {
+        const idAnnonce = 1;  
+        const idEnvoyeur = 5;  
+        const idDestinataire = 1;  
+        const contenu = this.newMessage;
+        
+        this.sendMessageToDatabase(idAnnonce, idEnvoyeur, idDestinataire, contenu);
+        if (!this.activeConversation.messages) {
+          this.activeConversation.messages = [];
+        }
+        this.activeConversation.messages.push({ sender: "me", contenu: this.newMessage, id: Date.now() }); // Ajouter un id unique temporaire
+        this.newMessage = ""; 
+      }
+    },
+    sendMessageToDatabase(idAnnonce, idEnvoyeur, idDestinataire, contenu) {
+      const messageData = {
+        type: 'messages',
+        idAnnonce: idAnnonce.toString(),
+        idEnvoyeur: idEnvoyeur.toString(),
+        idDestinataire: idDestinataire.toString(),
+        contenu: contenu
+      };
 
+      fetch('https://dnmade1.gobelinsannecy.fr/PetitesAnnonces/api/v1/', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(messageData)
+      })
+      .then(response => {
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+        return response.json();
+      })
+      .then(data => {
+        console.log('Message sent:', data);
+      })
+      .catch(error => {
+        console.error('Error sending message:', error);
+      });
+    },
+    deleteMessage(messageId) {
+      fetch(`https://dnmade1.gobelinsannecy.fr/PetitesAnnonces/api/v1/?message=${messageId}`, {
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      })
+      .then(response => {
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+        return response.json();
+      })
+      .then(data => {
+        console.log('Message deleted:', data);
+        const index = this.activeConversation.messages.findIndex(msg => msg.id === messageId);
+        if (index !== -1) {
+          this.activeConversation.messages.splice(index, 1);
+        }
+      })
+      .catch(error => {
+        console.error('Error deleting message:', error);
+      });
+    }
   }
 };
 </script>
 
-<style>
-body { font-family: Arial, sans-serif; }
-</style>
+
