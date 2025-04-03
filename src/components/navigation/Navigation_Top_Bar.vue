@@ -7,7 +7,7 @@ import IconMan from '../icons/IconMan.vue'
   <section>
     <h1>LePetitMauvaisCoin</h1>
     <div class="link_container">
-      <a href="/">
+      <a href="/my-messages">
         <IconMessage />
         <span>Messages</span>
       </a>
