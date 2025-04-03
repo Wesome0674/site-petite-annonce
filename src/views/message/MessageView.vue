@@ -47,9 +47,9 @@ export default {
     },
     sendMessage() {
       if (this.newMessage.trim() && this.activeConversation) {
-        const idAnnonce = 1
-        const idEnvoyeur = 5
-        const idDestinataire = 1
+        const idAnnonce = this.idAnnonce
+        const idEnvoyeur = this.idEnvoyeur
+        const idDestinataire = this.idReceveur
         const contenu = this.newMessage
 
         this.sendMessageToDatabase(idAnnonce, idEnvoyeur, idDestinataire, contenu)
@@ -94,7 +94,7 @@ export default {
         })
     },
     deleteMessage(messageId) {
-      fetch(`https://dnmade1.gobelinsannecy.fr/PetitesAnnonces/api/v1/?message=${messageId}`, {
+      fetch(`https://demade1.gobelinsannecy.fr/PetitesAnnonces/api/v1/?message=${messageId}`, {
         method: 'DELETE',
         headers: {
           'Content-Type': 'application/json',
@@ -122,23 +122,29 @@ export default {
 </script>
 
 <template>
-  <div class="flex h-screen bg-gray-100">
-    <div class="w-1/3 bg-white shadow-md p-4 overflow-y-auto">
+  <div v-if="idAnnonce && idReceveur" class="flex flex-col h-screen bg-gray-100">
+    <div class="w-full h-full bg-white shadow-md p-4 overflow-y-auto">
       <h2 class="text-lg font-semibold mb-4">Messages</h2>
-      <ul>
-        <li
+      <div class="flex flex-col gap-2">
+        <div
           v-for="(conv, index) in conversations"
           :key="index"
           @click="selectConversation(conv)"
-          class="p-2 cursor-pointer border-b hover:bg-gray-200"
-          :class="{ 'bg-gray-300': conv.id === activeConversation?.id }"
+          class="p-2 cursor-pointer hover:bg-gray-200 rounded"
         >
-          <strong>{{ conv.contenu }}</strong>
-        </li>
-      </ul>
+          <div :class="conv.idEnvoyeur === idEnvoyeur ? 'text-right' : 'text-left'">
+            <span
+              class="inline-block px-3 py-1 rounded-lg"
+              :class="conv.idEnvoyeur === idEnvoyeur ? 'bg-blue-500 text-white' : 'bg-gray-300'"
+            >
+              {{ conv.contenu }}
+            </span>
+          </div>
+        </div>
+      </div>
     </div>
 
-    <div class="w-2/3 flex flex-col">
+    <div class="w-full flex flex-col">
       <div v-if="activeConversation" class="flex-1 flex flex-col bg-white shadow-md">
         <div class="p-4 border-b font-semibold">
           {{ activeConversation.name }}
@@ -157,13 +163,6 @@ export default {
             >
               {{ msg.contenu }}
             </span>
-            <button
-              v-if="msg.sender === 'me'"
-              @click="deleteMessage(msg.id)"
-              class="ml-2 text-red-500 hover:text-red-700"
-            >
-              Supprimer
-            </button>
           </div>
         </div>
 
@@ -185,4 +184,173 @@ export default {
       </div>
     </div>
   </div>
+  <div v-else class="flex items-center justify-center h-screen">
+    <p class="text-gray-500">No conversation selected</p>
+  </div>
 </template>
+
+<style scoped>
+.text-right {
+  text-align: right;
+}
+
+.text-left {
+  text-align: left;
+}
+
+.flex {
+  display: flex;
+}
+
+.flex-col {
+  flex-direction: column;
+}
+
+.h-screen {
+  height: 91vh;
+}
+
+.h-full {
+  height: 100%;
+}
+
+.w-1\/3 {
+  width: 33.333333%;
+}
+
+.w-2\/3 {
+  width: 66.666667%;
+}
+
+.bg-white {
+  background-color: white;
+}
+
+.bg-gray-100 {
+  background-color: #f3f4f6;
+}
+
+.shadow-md {
+  box-shadow:
+    0 4px 6px -1px rgba(0, 0, 0, 0.1),
+    0 2px 4px -1px rgba(0, 0, 0, 0.06);
+}
+
+.p-4 {
+  padding: 1rem;
+}
+
+.mb-4 {
+  margin-bottom: 1rem;
+}
+
+.gap-2 {
+  gap: 0.5rem;
+}
+
+.rounded {
+  border-radius: 0.25rem;
+}
+
+.rounded-lg {
+  border-radius: 0.5rem;
+}
+
+.cursor-pointer {
+  cursor: pointer;
+}
+
+.hover\:bg-gray-200:hover {
+  background-color: #e5e7eb;
+}
+
+.bg-gray-300 {
+  background-color: #d1d5db;
+}
+
+.bg-blue-500 {
+  background-color: #3b82f6;
+}
+
+.text-white {
+  color: white;
+}
+
+.px-3 {
+  padding-left: 0.75rem;
+  padding-right: 0.75rem;
+}
+
+.py-1 {
+  padding-top: 0.25rem;
+  padding-bottom: 0.25rem;
+}
+
+.inline-block {
+  display: inline-block;
+}
+
+.border-b {
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.border-t {
+  border-top: 1px solid #e5e7eb;
+}
+
+.font-semibold {
+  font-weight: 600;
+}
+
+.overflow-y-auto {
+  overflow-y: auto;
+}
+
+.mb-2 {
+  margin-bottom: 0.5rem;
+}
+
+.ml-2 {
+  margin-left: 0.5rem;
+}
+
+.text-red-500 {
+  color: #ef4444;
+}
+
+.hover\:text-red-700:hover {
+  color: #b91c1c;
+}
+
+.text-gray-500 {
+  color: #6b7280;
+}
+
+input {
+  padding: 0.5rem;
+  border: 1px solid #e5e7eb;
+  border-radius: 0.5rem;
+  width: 100%;
+}
+
+button {
+  padding: 0.5rem 1rem;
+  border-radius: 0.5rem;
+  background-color: #3b82f6;
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+
+.text-lg {
+  font-size: 1.125rem;
+}
+
+.items-center {
+  align-items: center;
+}
+
+.justify-center {
+  justify-content: center;
+}
+</style>
