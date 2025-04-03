@@ -3,16 +3,31 @@ export default {
   data() {
     return {
       conversations: [],
+      idAnnonce: null,
+      idReceveur: null,
+      idEnvoyeur: null,
       activeConversation: null,
       newMessage: '',
     }
   },
   mounted() {
+    this.idAnnonce = this.$route.query.annonceId
+    this.idReceveur = this.$route.query.receveurId
+
+    const userConnected = JSON.parse(localStorage.getItem('userConnected'))
+    this.idEnvoyeur = userConnected ? userConnected.idUser : null
+
+    console.log(this.idAnnonce)
+    console.log(this.idReceveur)
+    console.log(this.idEnvoyeur)
+
     this.getMessagesFromUser()
   },
   methods: {
     getMessagesFromUser() {
-      fetch('https://dnmade1.gobelinsannecy.fr/PetitesAnnonces/api/v1/?messages&user=5')
+      fetch(
+        `https://dnmade1.gobelinsannecy.fr/PetitesAnnonces/api/v1/?messages&user=${this.idEnvoyeur}`,
+      )
         .then((response) => {
           if (!response.ok) {
             throw new Error('Network response was not ok')
