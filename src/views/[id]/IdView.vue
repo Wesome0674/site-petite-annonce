@@ -47,7 +47,13 @@ onMounted(() => {
   <div>
     <div v-if="error" class="error">{{ error }}</div>
     <div v-else-if="annonce">
-      <Body :title="annonce.titre" :description="annonce.description" :prix="annonce.prix" />
+      <Body
+        :annonce-id="annonce.idAnnonce"
+        :receveur-id="annonce.idUser"
+        :title="annonce.titre"
+        :description="annonce.description"
+        :prix="annonce.prix"
+      />
     </div>
     <div v-else>Loading...</div>
   </div>

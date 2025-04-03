@@ -1,9 +1,13 @@
-<script lang="ts">
+<script setup lang="ts">
 import IconPrice from '../icons/IconPrice.vue'
 
-export default {
-  props: ['title', 'description', 'prix'],
-}
+defineProps<{
+  annonceId: string
+  receveurId: string
+  title: string
+  description: string
+  prix: number
+}>()
 </script>
 
 <template>
@@ -13,10 +17,15 @@ export default {
       <p class="description">{{ description }}</p>
       <p class="price">{{ prix }}.00 €</p>
     </div>
-    <RouterLink to="/message">
-      <IconPrice />
-      Envoyer un message
-    </RouterLink>
+    <div class="right-part">
+      <RouterLink
+        :to="`/my-messages?receveurId=${receveurId}&annonceId=${annonceId}`"
+        class="message-button"
+      >
+        <IconPrice />
+        Envoyer un message
+      </RouterLink>
+    </div>
   </div>
 </template>
 
@@ -46,6 +55,28 @@ export default {
 
 .title,
 .price {
+  font-weight: 600;
+}
+
+.right-part {
+  display: flex;
+  width: max-content;
+  height: 100%;
+  align-items: center;
+  justify-content: center;
+}
+
+.message-button {
+  display: flex;
+  width: max-content;
+  padding: 12px 15px;
+  border-radius: 10px;
+  align-items: center;
+  background-color: orangered;
+  color: white;
+  text-decoration: none;
+  font-size: var(--h2);
+  gap: 10px;
   font-weight: 600;
 }
 </style>
