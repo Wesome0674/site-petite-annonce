@@ -74,55 +74,122 @@ export default {
 
 <template>
   <div id="home_page">
-    <!-- Display category badges -->
-    <div class="badge" @click="switchCat('All')">All</div>
-    <div class="badge" v-for="(cat, index) in all_categorie" :key="index">
-      <p @click="switchCat(cat)">{{ cat }}</p>
+    <!-- Category filters section -->
+    <div class="categories-container">
+      <div class="badge" @click="switchCat('All')">All</div>
+      <div class="badge" v-for="(cat, index) in all_categorie" :key="index">
+        <p @click="switchCat(cat)">{{ cat }}</p>
+      </div>
     </div>
 
-    <!-- Display filtered annonces -->
-    <div
-      class="card"
-      v-for="annonce in filteredCat"
-      :key="annonce.id"
-      @click="goToAnnonce(annonce.idAnnonce)"
-    >
-      <p>{{ annonce.titre }}</p>
-      <p>{{ annonce.description }}</p>
-      <p>{{ annonce.prix }} €</p>
+    <!-- Annonces grid -->
+    <div class="annonces-grid">
+      <div
+        class="card"
+        v-for="annonce in filteredCat"
+        :key="annonce.id"
+        @click="goToAnnonce(annonce.idAnnonce)"
+      >
+        <h3 class="card-title">{{ annonce.titre }}</h3>
+        <p class="card-description">{{ annonce.description }}</p>
+        <p class="card-price">{{ annonce.prix }} €</p>
+      </div>
     </div>
   </div>
 </template>
 
 <style>
 #home_page {
-  width: 80vw;
+ 
+  padding: 20px;
 }
 
-.card {
-  height: 300px;
-  border: 1px solid #ccc;
-  margin: 10px;
-  padding: 10px;
-  border-radius: 5px;
-  cursor: pointer;
-}
-
-.card:hover {
-  background-color: #f9f9f9;
+.categories-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 30px;
 }
 
 .badge {
   display: inline-block;
-  margin: 5px;
-  padding: 10px;
-  background-color: #007bff;
+  padding: 8px 16px;
+  background-color: #3498db;
   color: white;
-  border-radius: 5px;
+  border-radius: 25px;
   cursor: pointer;
+  transition: all 0.3s ease;
+  font-weight: 500;
 }
 
 .badge:hover {
-  background-color: #0056b3;
+  background-color: #2980b9;
+  transform: translateY(-2px);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.badge p {
+  margin: 0;
+}
+
+.annonces-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 20px;
+}
+
+.card {
+  height: auto;
+  min-height: 200px;
+  border: 1px solid #e1e1e1;
+  border-radius: 12px;
+  padding: 20px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  background-color: white;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+}
+
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+.card-title {
+  font-size: 1.2rem;
+  font-weight: 600;
+  margin: 0 0 10px 0;
+  color: #2c3e50;
+}
+
+.card-description {
+  font-size: 0.9rem;
+  color: #666;
+  margin: 10px 0;
+  line-height: 1.5;
+}
+
+.card-price {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #27ae60;
+  margin: 10px 0 0 0;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  #home_page {
+    width: 95%;
+    padding: 10px;
+  }
+
+  .annonces-grid {
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 15px;
+  }
+
+  .card {
+    padding: 15px;
+  }
 }
 </style>

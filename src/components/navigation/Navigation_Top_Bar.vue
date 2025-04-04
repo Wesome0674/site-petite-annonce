@@ -1,6 +1,28 @@
 <script setup lang="ts">
 import IconMessage from '../icons/IconMessage.vue'
 import IconMan from '../icons/IconMan.vue'
+import IconAddAnnonce from '../icons/IconAddAnnonce.vue'
+import { ref, onMounted } from 'vue'
+import { useRouter } from 'vue-router'
+
+const router = useRouter()
+const isUserConnected = ref(false)
+
+onMounted(() => {
+  checkUserConnection()
+})
+
+function checkUserConnection() {
+  const user = localStorage.getItem('userConnected')
+  isUserConnected.value = !!user
+}
+
+function handleLogout() {
+  localStorage.removeItem('userConnected')
+  document.cookie = 'authToken=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;'
+  isUserConnected.value = false
+  router.push('/login')
+}
 </script>
 
 <template>
@@ -9,13 +31,17 @@ import IconMan from '../icons/IconMan.vue'
       <h1>LePetitMauvaisCoin</h1>
     </RouterLink>
     <div class="link_container">
-      <a href="/my-messages">
-        <IconMessage />
-        <span>Messages</span>
+      <a href="/add-annonce">
+        <IconAddAnnonce />
+        <span>Creer une annonce</span>
       </a>
-      <a href="/logIn">
+      <a v-if="!isUserConnected" href="/logIn">
         <IconMan />
         <span>Se connecter</span>
+      </a>
+      <a v-else @click="handleLogout" class="logout-btn">
+        <IconMan />
+        <span>Se déconnecter</span>
       </a>
     </div>
   </section>
@@ -51,6 +77,15 @@ h1 {
   justify-content: end;
 }
 
+.logout-btn {
+  color: #dc3545 !important;
+  transition: color 0.3s ease;
+}
+
+.logout-btn:hover {
+  color: #bd2130 !important;
+}
+
 .link_container a {
   display: flex;
   text-decoration: none;
@@ -62,5 +97,10 @@ h1 {
   justify-content: space-between;
   width: max-content;
   height: 100%;
+  transition: transform 0.2s ease;
+}
+
+.link_container a:hover {
+  transform: translateY(-2px);
 }
 </style>
